@@ -7,10 +7,11 @@ import { RootState } from '@/redux/store'
 interface UrlFormProps {
   onSubmit: (url: string) => void,
   loader: boolean,
-  setLoader: (loader: boolean) => void
+  setLoader: (loader: boolean) => void,
+  shortenUrl: string | null
 }
 
-const UrlForm: React.FC<UrlFormProps> = ({ onSubmit, loader, setLoader }) => {
+const UrlForm: React.FC<UrlFormProps> = ({ onSubmit, loader, setLoader, shortenUrl }) => {
   const apiToken = useSelector((state:RootState) => state.apiToken.token);
   const user = localStorage.getItem('user');
   const [url, setUrl] = useState('')
@@ -35,7 +36,7 @@ const UrlForm: React.FC<UrlFormProps> = ({ onSubmit, loader, setLoader }) => {
         onChange={(e) => setUrl(e.target.value)}
         required
       />
-      {apiToken && user && <Button className='w-full my-2 jost-bold text-medium' type="submit" color="success" onClick={handleSubmit}>
+      {apiToken && user && !shortenUrl && <Button className='w-full my-2 jost-bold text-medium' type="submit" color="success" onClick={handleSubmit}>
         {loader ? <Spinner size='sm' /> : 'Shorten URL'}
       </Button>}
       {!apiToken && user && <Button className='w-full my-2 jost-bold text-medium'  color="default">

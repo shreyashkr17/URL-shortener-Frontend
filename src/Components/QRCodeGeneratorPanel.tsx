@@ -28,7 +28,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ url }) => {
 
   // Render the canvas element in the JSX
   return (
-    <div className='w-full h-auto flex justify-center items-center mt-4 rounded-lg'>
+    url && <div className='w-full h-auto flex justify-center items-center mt-4 rounded-lg'>
       {/* Canvas element where the QR code will be drawn */}
       <canvas ref={canvasRef} className='rounded-xl'></canvas>
     </div>

@@ -15,6 +15,12 @@ module.exports = {
       // add custom font size
       fontSize:{
         '12xl':'15rem'
+      },
+      height:{
+        '100':'700px'
+      },
+      screens:{
+        'xs':'320px'
       }
     },
   },

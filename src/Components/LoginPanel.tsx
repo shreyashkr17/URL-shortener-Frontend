@@ -71,7 +71,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       <Button className="w-full my-2 jost-bold text-medium" type="submit" color="success" onClick={handleSubmit}>
         {loader ? <Spinner size="sm" /> : "Login"}
       </Button>
-      <p className="jost-extramediumlight w-full flex justify-center items-center">
+      <p className="jost-extramediumlight w-full flex flex-wrap justify-center items-center">
         Don&apos;t have an account?&nbsp;
         <Link
           to="/"

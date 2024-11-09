@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UrlForm from "../Components/UrlForm";
 import UrlResult from "../Components/UrlResult";
 import RegisterPanel from "./RegisterPanel";
@@ -30,6 +30,11 @@ import {
   // Button,
 } from "@nextui-org/react";
 import { toast } from "react-toastify";
+import ExcelHome from "./ExcelHome";
+import Banner from "./Banner";
+import Banner2 from './Banner2';
+import {Button} from '@nextui-org/react';
+// import Banner3 from './Banner3';
 
 const URLHome: React.FC = () => {
   const [shortUrl, setShortUrl] = useState<string | null>(null);
@@ -43,6 +48,7 @@ const URLHome: React.FC = () => {
   const [loader, setLoader] = useState<boolean>(false);
   const [registerLoader, setRegisterLoader] = useState<boolean>(false);
   const [loginLoader, setLoginLoader] = useState<boolean>(false);
+  const [windowsize, SetWindowSize] = useState<number>(0);
   const [activeTab, setActiveTab] = useState<string>("login");
 
   const dispatch = useDispatch();
@@ -62,13 +68,12 @@ const URLHome: React.FC = () => {
   const username = parsedUser ? parsedUser.username : "";
   const userEmail = parsedUser ? parsedUser.email : "";
   const apiTokenId = useSelector((state: RootState) => state.apiToken.id) ?? "";
-  const apiToken =
-    useSelector((state: RootState) => state.apiToken.token) ?? "";
+  const apiToken = useSelector((state: RootState) => state.apiToken.token) ?? "";
 
   const handleSubmit = async (url: string) => {
     try {
       setError(null);
-      const result = await shortenUrl(url, token, apiToken);
+      const result = await shortenUrl(url, apiToken);
       setShortUrl(result.shortUrl);
       setLoader(false);
     } catch (error) {
@@ -155,6 +160,18 @@ const URLHome: React.FC = () => {
     }
   };
 
+  const clearShortURL = () => {
+    setShortUrl(null);
+  }
+
+  //set windowSize using useEffect
+  
+  useEffect(() => {
+    SetWindowSize(window.innerWidth);
+    window.addEventListener("resize", () => {
+      SetWindowSize(window.innerWidth);
+    });
+  },[]);
 
   return (
     <div className="h-full w-full ">
@@ -194,10 +211,12 @@ const URLHome: React.FC = () => {
         <h1 className="righteous-regular ">ShortlyCut.xyz</h1>
       </div> */}
       <div className="absolute h-full w-full  top-0"></div>
-      <div className="relative inset-0 lg:h-full flex flex-col-reverse lg:flex-row justify-start lg:justify-center lg:items-center full">
-        <div className="lg:w-1/2 w-full mb-4 h-full flex justify-center items-center p-8">
-          <div className="bg-white bg-opacity-50 backdrop-blur-sm p-8 rounded-xl shadow-lg max-w-lg w-full">
+      <Banner/>
+      <div id="url" className="relative inset-0 lg:h-full flex flex-col-reverse py-14 px-5 lg:flex-row justify-start lg:justify-center lg:items-center full">
+        <div className="lg:w-1/2 w-full mb-4 h-full flex justify-center items-center sm:p-8">
+          <div className="bg-white bg-opacity-50 backdrop-blur-sm sm:p-8 p-2 rounded-xl shadow-lg max-w-lg w-full">
             <UrlForm
+              shortenUrl={shortUrl}
               onSubmit={handleSubmit}
               loader={loader}
               setLoader={setLoader}
@@ -213,11 +232,12 @@ const URLHome: React.FC = () => {
                 <UrlResult shortUrl={shortUrl} />
               </div>
             )}
+            {userData && shortUrl && <Button className="text-white text-medium jost-bold w-full mt-4" color="danger" onClick={clearShortURL}>Create new ShortenURL</Button>}
           </div>
         </div>
         {!userData && (
           <div className="lg:w-1/2 w-full mb-7 h-full flex justify-center items-center">
-            <div className="bg-white bg-opacity-50 backdrop-blur-sm p-8 rounded-xl shadow-lg max-w-lg w-full">
+            <div className="bg-white bg-opacity-50 backdrop-blur-sm sm:p-8 p-2 rounded-xl shadow-lg max-w-lg w-full">
               <div className="flex justify-center items-center w-full flex-col">
                 <Tabs
                   aria-label="Disabled Options"
@@ -273,6 +293,9 @@ const URLHome: React.FC = () => {
           </div>
         )}
       </div>
+      <Banner2/>
+      {windowsize>=600 ? <ExcelHome user={userData}/> : <h1 className="jost-bold my-8 p-5 w-full flex justify-center items-center lg:text-5xl sm:text-4xl xs:text-3xl flex-wrap text-white text-center">Try In Larger Screen</h1>}
+      {/* <Banner3/> */}
     </div>
   );
 };

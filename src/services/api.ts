@@ -1,11 +1,10 @@
 // src/services/api.ts
 
-// const API_BASE_URL = "http://localhost:5000";
-const API_BASE_URL = "https://njs.shortlycut.xyz"
+const API_BASE_URL = "http://localhost:5000";
+// const API_BASE_URL = "https://njs.shortlycut.xyz"
 
 export const shortenUrl = async (
   originalUrl: string,
-  auth_token:string,
   api_token:string
 ): Promise<{ shortUrl: string }> => {
   // const port = getNextPort();
@@ -13,7 +12,6 @@ export const shortenUrl = async (
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "authorization": auth_token,
       "X-API-Token": api_token,
     },
     body: JSON.stringify({ original_url: originalUrl }),
@@ -224,4 +222,25 @@ export const revokeandCreateToken = async (
   const responseCreate = await generateToken(token);
   // console.log(responseCreate);
   return responseCreate;
+}
+
+export const shortenBatchURLs =  async (
+  api_token: string,
+  urlArray: any[]
+): Promise<{processedUrls: any[]}> => {
+  const response = await fetch(`${API_BASE_URL}/shorten/batch`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-Token": api_token,
+    },
+    body: JSON.stringify({ urlArray }),
+  });
+
+  if(!response.ok){
+    throw new Error("Failed to shorten URL");
+  }
+
+  const data = await response.json();
+  return { processedUrls: data.processedUrls };
 }
