@@ -1,6 +1,6 @@
 import React from "react";
 import UrlHome from "@/Components/URLHome";
-import ExcelHome from "@/Components/ExcelHome";
+// import ExcelHome from "@/Components/ExcelHome";
 
 const Home: React.FC = () => {
   return (

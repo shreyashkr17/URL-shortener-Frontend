@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 // import { useScroll } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { clearToken } from "./redux/apiToken/apiToken";
 import { logout } from "./redux/user/userSlice";
 

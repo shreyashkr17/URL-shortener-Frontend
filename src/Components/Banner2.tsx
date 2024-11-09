@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import { Table, FileSpreadsheet, ArrowRight, CheckCircle } from "lucide-react";
 
@@ -8,6 +8,7 @@ export default function banner2() {
 
   useEffect(() => {
     setIsVisible(true);
+    console.log(isVisible)
     const interval = setInterval(() => {
       setActiveStep((prev) => (prev + 1) % 3);
     }, 3000);
