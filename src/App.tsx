@@ -13,49 +13,49 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const [location, setLocation] = useState<{ lat: number; lon: number } | null>(
-    null
-  );
-  const [error, setError] = useState<string | null>(null);
+  // const [location, setLocation] = useState<{ lat: number; lon: number } | null>(
+  //   null
+  // );
+  // const [error, setError] = useState<string | null>(null);
   // check if the user is authenticated for 24 hr long then remove the user detail from local storage and clear the redux storage
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // Check if geolocation is supported
-    if (!navigator.geolocation) {
-      setError('Geolocation is not supported by your browser.');
-      return;
-    }
+  // useEffect(() => {
+  //   // Check if geolocation is supported
+  //   if (!navigator.geolocation) {
+  //     setError('Geolocation is not supported by your browser.');
+  //     return;
+  //   }
 
-    // Request location
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // Success callback
-        setLocation({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-        setError(null); // Clear any previous error
-      },
-      (err) => {
-        // Error callback
-        switch (err.code) {
-          case err.PERMISSION_DENIED:
-            setError('User denied the request for Geolocation.');
-            break;
-          case err.POSITION_UNAVAILABLE:
-            setError('Location information is unavailable.');
-            break;
-          case err.TIMEOUT:
-            setError('The request to get user location timed out.');
-            break;
-          default:
-            setError('An unknown error occurred.');
-            break;
-        }
-      }
-    );
-  }, []);
+  //   // Request location
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       // Success callback
+  //       setLocation({
+  //         lat: position.coords.latitude,
+  //         lon: position.coords.longitude,
+  //       });
+  //       setError(null); // Clear any previous error
+  //     },
+  //     (err) => {
+  //       // Error callback
+  //       switch (err.code) {
+  //         case err.PERMISSION_DENIED:
+  //           setError('User denied the request for Geolocation.');
+  //           break;
+  //         case err.POSITION_UNAVAILABLE:
+  //           setError('Location information is unavailable.');
+  //           break;
+  //         case err.TIMEOUT:
+  //           setError('The request to get user location timed out.');
+  //           break;
+  //         default:
+  //           setError('An unknown error occurred.');
+  //           break;
+  //       }
+  //     }
+  //   );
+  // }, []);
 
   useEffect(() => {
     const user = localStorage.getItem("user") ?? "";
