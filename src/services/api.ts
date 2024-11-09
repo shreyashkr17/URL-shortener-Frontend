@@ -1,7 +1,7 @@
 // src/services/api.ts
 
-const API_BASE_URL = "http://localhost:5000";
-// const API_BASE_URL = "https://njs.shortlycut.xyz"
+// const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://njs.shortlycut.xyz"
 
 export const shortenUrl = async (
   originalUrl: string,
